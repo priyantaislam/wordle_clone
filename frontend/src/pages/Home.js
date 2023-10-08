@@ -1,64 +1,45 @@
 import React, { useEffect } from "react";
-import { useWorkoutsContext } from "../hooks/useWorkoutsContext";
 import { useAuthContext } from "../hooks/useAuthContext";
 import styled from "styled-components"; // Import styled from styled-components
-import WorkoutDetails from "../components/WorkoutDetails";
-import WorkoutForm from "../components/WorkoutForm";
 
-const HomeContainer = styled.div`
+const GridContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(5, 50px); /* 5 columns with 50px width each */
+  grid-template-rows: repeat(6, 50px);    /* 6 rows with 50px height each */
+  gap: 10px; /* Adjust the gap between boxes as needed */
+  padding: 10px; /* Add padding around the grid */
+`;
+
+// Create a styled component for the grid item
+const GridItem = styled.div`
+  border: 2px solid #ccc; /* Add a grey border around each box */
+  width: 50px; /* Set the width of each box to 50px */
+  height: 50px; /* Set the height of each box to 50px to make them squares */
   display: flex;
-  justify-content: space-between;
-  gap: 100px;
-
-  @media screen and (max-width: 768px) {
-    flex-direction: column;
-    gap: 20px;
-  }
+  align-items: center;
+  justify-content: center;
+  font-size: 18px; /* Add any additional styling you need */
+  left-margin:50%;
 `;
-
-const WorkoutsContainer = styled.div`
-  flex: 3;
-`;
-
-const WorkoutFormContainer = styled.div`
-  flex: 1;
-`;
-
 const Home = () => {
-  const { workouts, dispatch } = useWorkoutsContext();
   const { user } = useAuthContext();
 
   useEffect(() => {
-    const fetchWorkouts = async () => {
-      const response = await fetch("/api/workouts", {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      });
-      const json = await response.json();
+  }, []);
 
-      if (response.ok) {
-        dispatch({ type: "SET_WORKOUTS", payload: json });
-      }
-    };
+  // Create an array to represent the grid cells
+  const gridItems = [];
 
-    if (user) {
-      fetchWorkouts();
-    }
-  }, [dispatch, user]);
-
+  // Generate the grid items
+  for (let i = 0; i < 5 * 6; i++) {
+    gridItems.push(
+      <GridItem key={i}>
+        {/* You can add content here if needed */}
+      </GridItem>
+    );
+  }
   return (
-    <HomeContainer>
-      <WorkoutsContainer>
-        {workouts &&
-          workouts.map((workout) => (
-            <WorkoutDetails workout={workout} key={workout._id} />
-          ))}
-      </WorkoutsContainer>
-      <WorkoutFormContainer>
-        <WorkoutForm />
-      </WorkoutFormContainer>
-    </HomeContainer>
+    <GridContainer>{gridItems}</GridContainer>
   );
 };
 
