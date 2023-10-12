@@ -8,6 +8,7 @@ const GridContainer = styled.div`
   grid-template-rows: repeat(6, 50px);    /* 6 rows with 50px height each */
   gap: 10px; /* Adjust the gap between boxes as needed */
   padding: 10px; /* Add padding around the grid */
+  margin-left:30%;
 `;
 
 // Create a styled component for the grid item
@@ -19,7 +20,7 @@ const GridItem = styled.div`
   align-items: center;
   justify-content: center;
   font-size: 18px; /* Add any additional styling you need */
-  left-margin:50%;
+  
 `;
 const Home = () => {
   const { user } = useAuthContext();
